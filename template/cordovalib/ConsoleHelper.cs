@@ -87,15 +87,6 @@ namespace WPCordovaClassLib.CordovaLib
             }
         }
 
-        public void DetachHandler()
-        {
-            if (hasListener)
-            {
-                PhoneApplicationService.Current.Closing -= OnServiceClosing;
-                hasListener = false;
-            }
-        }
-
         public bool HandleCommand(string commandStr)
         {
             string output = commandStr.Substring("ConsoleLog/".Length);
@@ -110,6 +101,16 @@ namespace WPCordovaClassLib.CordovaLib
                 file.Close();
             }
             return true;
+        }
+
+        public void AttachNativeHandlers()
+        {
+            PhoneApplicationService.Current.Closing += OnServiceClosing;
+        }
+
+        public void DetachNativeHandlers()
+        {
+            PhoneApplicationService.Current.Closing -= OnServiceClosing;
         }
 
     }
